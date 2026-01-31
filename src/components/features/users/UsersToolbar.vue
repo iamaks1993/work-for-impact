@@ -1,32 +1,36 @@
 <template>
-  <div class="flex flex-wrap items-center justify-between gap-4 border-b border-base-300 px-4 py-3">
+  <div
+    class="flex flex-col gap-3 border-b border-base-300 px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
+  >
     <div>
       <p class="text-base font-semibold text-base-content">Users list</p>
     </div>
-    <div class="flex flex-wrap items-center gap-2">
-      <input
-        v-model="localSearch"
-        type="search"
-        placeholder="Search users..."
-        class="h-10 w-64 rounded-md border border-base-300 bg-base-100 px-3 text-sm text-base-content placeholder:text-secondary focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
-      />
-      <select
-        v-model="localRole"
-        class="h-10 rounded-md border border-base-300 bg-base-100 px-2 text-sm text-base-content focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
-      >
-        <option value="">All roles</option>
-        <option value="admin">Admin</option>
-        <option value="moderator">Moderator</option>
-        <option value="user">User</option>
-      </select>
-      <select
-        v-model="localGender"
-        class="h-10 rounded-md border border-base-300 bg-base-100 px-2 text-sm text-base-content focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
-      >
-        <option value="">All genders</option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-      </select>
+    <div class="w-full sm:w-auto">
+      <div class="grid grid-cols-2 gap-2 sm:flex sm:items-center sm:gap-2">
+        <input
+          v-model="localSearch"
+          type="search"
+          placeholder="Search users..."
+          class="col-span-2 h-10 w-full sm:col-span-1 sm:w-64 rounded-md border border-base-300 bg-base-100 px-3 text-sm text-base-content placeholder:text-secondary focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
+        />
+        <select
+          v-model="localRole"
+          class="h-10 w-full rounded-md border border-base-300 bg-base-100 px-2 text-sm text-base-content focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
+        >
+          <option value="">All roles</option>
+          <option value="admin">Admin</option>
+          <option value="moderator">Moderator</option>
+          <option value="user">User</option>
+        </select>
+        <select
+          v-model="localGender"
+          class="h-10 w-full rounded-md border border-base-300 bg-base-100 px-2 text-sm text-base-content focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
+        >
+          <option value="">All genders</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
     </div>
   </div>
 </template>
