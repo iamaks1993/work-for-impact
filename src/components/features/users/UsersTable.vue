@@ -8,7 +8,7 @@
           <th v-for="column in columns" :key="column.key" class="whitespace-nowrap px-4 py-2.5">
             <button
               v-if="column.sortable"
-              class="inline-flex items-center gap-1"
+              class="inline-flex uppercase items-center gap-1"
               type="button"
               @click="emitSort(column.sortKey)"
             >
@@ -21,13 +21,13 @@
       </thead>
       <tbody class="divide-y divide-base-300 text-base text-base-content">
         <tr v-if="loading">
-          <td class="px-4 py-6 text-center text-secondary" colspan="9">Loading users...</td>
+          <td class="px-4 py-6 text-center text-secondary" colspan="10">Loading users...</td>
         </tr>
         <tr v-else-if="error">
-          <td class="px-4 py-6 text-center text-secondary" colspan="9">{{ error }}</td>
+          <td class="px-4 py-6 text-center text-secondary" colspan="10">{{ error }}</td>
         </tr>
         <tr v-else-if="users.length === 0">
-          <td class="px-4 py-6 text-center text-secondary" colspan="9">No users loaded yet.</td>
+          <td class="px-4 py-6 text-center text-secondary" colspan="10">No users loaded yet.</td>
         </tr>
         <tr v-else v-for="user in users" :key="user.id">
           <td class="whitespace-nowrap px-4 py-3 text-sm font-semibold text-secondary">
@@ -53,7 +53,7 @@
           </td>
           <td class="whitespace-nowrap px-4 py-3">
             <span
-              class="inline-flex items-center rounded-full bg-base-200 px-2.5 py-1 text-xs font-semibold text-secondary"
+              class="inline-flex items-center rounded-full bg-base-200 px-2.5 py-1 text-xs font-semibold text-secondary capitalize"
             >
               {{ user.role || 'User' }}
             </span>
@@ -64,7 +64,7 @@
           <td class="whitespace-nowrap px-4 py-3 text-sm text-secondary">
             {{ user.age }}
           </td>
-          <td class="whitespace-nowrap px-4 py-3 text-sm text-secondary">
+          <td class="whitespace-nowrap px-4 py-3 text-sm text-secondary capitalize">
             {{ user.gender }}
           </td>
           <td class="whitespace-nowrap px-4 py-3 text-sm text-secondary">
