@@ -13,6 +13,7 @@
         :error="usersStore.error"
         :sort-key="sortKey"
         :sort-dir="sortDir"
+        :updated-id="updatedId"
         @sort="handleSort"
         @delete="handleDelete"
         @edit="openEdit"
@@ -112,6 +113,7 @@ const handleDelete = (user) => {
 
 const isModalOpen = ref(false)
 const editingUserId = ref(null)
+const updatedId = ref(null)
 const formFields = {
   firstName: '',
   lastName: '',
@@ -181,10 +183,17 @@ const saveUser = (data) => {
 
   if (editingUserId.value) {
     usersStore.updateUser(payload)
+    updatedId.value = payload.id
+    window.clearTimeout(updatedTimeout)
+    updatedTimeout = window.setTimeout(() => {
+      updatedId.value = null
+    }, 800)
   } else {
     usersStore.addUser(payload)
   }
   closeModal()
 }
+
+let updatedTimeout = 0
 
 </script>

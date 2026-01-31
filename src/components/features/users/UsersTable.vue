@@ -19,17 +19,32 @@
           </th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-base-300 text-base text-base-content">
+      <tbody
+        v-if="loading || error || users.length === 0"
+        class="divide-y divide-base-300 text-base text-base-content"
+      >
         <tr v-if="loading">
           <td class="px-4 py-6 text-center text-secondary" colspan="10">Loading users...</td>
         </tr>
         <tr v-else-if="error">
           <td class="px-4 py-6 text-center text-secondary" colspan="10">{{ error }}</td>
         </tr>
-        <tr v-else-if="users.length === 0">
+        <tr v-else>
           <td class="px-4 py-6 text-center text-secondary" colspan="10">No users loaded yet.</td>
         </tr>
-        <tr v-else v-for="user in users" :key="user.id">
+      </tbody>
+
+      <TransitionGroup
+        v-else
+        tag="tbody"
+        name="row"
+        class="divide-y divide-base-300 text-base text-base-content"
+      >
+        <tr
+          v-for="user in users"
+          :key="user.id"
+          :class="user.id === updatedId ? 'row-updated' : ''"
+        >
           <td class="whitespace-nowrap px-4 py-3 text-sm font-semibold text-secondary">
             #{{ user.id }}
           </td>
@@ -102,7 +117,7 @@
             </button>
           </td>
         </tr>
-      </tbody>
+      </TransitionGroup>
     </table>
   </div>
 </template>
@@ -128,6 +143,10 @@ defineProps({
   sortDir: {
     type: String,
     default: 'asc',
+  },
+  updatedId: {
+    type: [Number, String],
+    default: null,
   },
 })
 
@@ -158,3 +177,29 @@ const columns = [
   { key: 'actions', label: 'Actions' },
 ]
 </script>
+
+<style scoped>
+.row-enter-active,
+.row-leave-active {
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.row-enter-from,
+.row-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+.row-updated {
+  animation: rowFlash 800ms ease-out;
+}
+
+@keyframes rowFlash {
+  0% {
+    background-color: rgba(105, 113, 251, 0.2);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+</style>
