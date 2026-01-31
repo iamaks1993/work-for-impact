@@ -195,5 +195,4 @@ const saveUser = (data) => {
 }
 
 let updatedTimeout = 0
-
 </script>

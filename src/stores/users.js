@@ -16,7 +16,13 @@ export const useUsersStore = defineStore('users', {
     errorDetail: null,
   }),
   actions: {
-    async fetchUsers({ limit = this.limit, skip = this.skip, q = '', sortBy = '', order = 'asc' } = {}) {
+    async fetchUsers({
+      limit = this.limit,
+      skip = this.skip,
+      q = '',
+      sortBy = '',
+      order = 'asc',
+    } = {}) {
       this.loading = true
       this.error = null
 

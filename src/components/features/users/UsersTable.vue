@@ -181,7 +181,9 @@ const columns = [
 <style scoped>
 .row-enter-active,
 .row-leave-active {
-  transition: opacity 150ms ease, transform 150ms ease;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
 }
 
 .row-enter-from,

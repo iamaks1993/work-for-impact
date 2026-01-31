@@ -1,5 +1,7 @@
 <template>
-  <div class="flex w-full flex-col items-start justify-between gap-2 text-sm text-secondary sm:flex-row sm:items-center">
+  <div
+    class="flex w-full flex-col items-start justify-between gap-2 text-sm text-secondary sm:flex-row sm:items-center"
+  >
     <p class="text-sm font-medium text-secondary">
       Showing
       <span class="font-semibold text-base-content">{{ rangeStart }}</span>
@@ -10,7 +12,9 @@
       results
     </p>
 
-    <nav class="flex w-full items-center justify-center gap-1 rounded-md border border-base-300 bg-base-100 p-1.5 sm:w-auto">
+    <nav
+      class="flex w-full items-center justify-center gap-1 rounded-md border border-base-300 bg-base-100 p-1.5 sm:w-auto"
+    >
       <button
         class="inline-flex h-8 w-8 items-center justify-center rounded-md text-secondary transition hover:bg-base-200 hover:text-base-content disabled:cursor-not-allowed disabled:opacity-50"
         type="button"

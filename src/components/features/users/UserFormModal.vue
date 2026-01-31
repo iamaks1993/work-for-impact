@@ -147,7 +147,6 @@ const roleOptions = ROLE_OPTIONS
 const genderOptions = GENDER_OPTIONS
 const todayDate = new Date().toISOString().split('T')[0]
 
-
 watch(
   () => props.formData,
   (value) => {
