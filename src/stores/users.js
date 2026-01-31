@@ -13,12 +13,12 @@ export const useUsersStore = defineStore('users', {
     error: null,
   }),
   actions: {
-    async fetchUsers({ limit = this.limit, skip = this.skip, q = '' } = {}) {
+    async fetchUsers({ limit = this.limit, skip = this.skip, q = '', sortBy = '', order = 'asc' } = {}) {
       this.loading = true
       this.error = null
 
       try {
-        const data = await fetchUsersApi({ limit, skip, q })
+        const data = await fetchUsersApi({ limit, skip, q, sortBy, order })
         const users = data.users ?? []
         this.allUsers = users
         this.users = users

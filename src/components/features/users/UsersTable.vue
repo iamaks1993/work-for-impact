@@ -5,15 +5,18 @@
         class="bg-base-200 text-left text-sm font-semibold uppercase tracking-wide text-secondary"
       >
         <tr>
-          <th class="whitespace-nowrap px-4 py-2.5">ID</th>
-          <th class="whitespace-nowrap px-4 py-2.5">Profile</th>
-          <th class="whitespace-nowrap px-4 py-2.5">Name</th>
-          <th class="whitespace-nowrap px-4 py-2.5">Role</th>
-          <th class="whitespace-nowrap px-4 py-2.5">Birth date</th>
-          <th class="whitespace-nowrap px-4 py-2.5">Age</th>
-          <th class="whitespace-nowrap px-4 py-2.5">Gender</th>
-          <th class="whitespace-nowrap px-4 py-2.5">Email</th>
-          <th class="whitespace-nowrap px-4 py-2.5">Phone</th>
+          <th v-for="column in columns" :key="column.key" class="whitespace-nowrap px-4 py-2.5">
+            <button
+              v-if="column.sortable"
+              class="inline-flex items-center gap-1"
+              type="button"
+              @click="emitSort(column.sortKey)"
+            >
+              {{ column.label }}
+              <span v-if="sortKey === column.sortKey">{{ sortDir === 'asc' ? '▲' : '▼' }}</span>
+            </button>
+            <span v-else>{{ column.label }}</span>
+          </th>
         </tr>
       </thead>
       <tbody class="divide-y divide-base-300 text-base text-base-content">
@@ -88,5 +91,31 @@ defineProps({
     type: String,
     default: '',
   },
+  sortKey: {
+    type: String,
+    default: '',
+  },
+  sortDir: {
+    type: String,
+    default: 'asc',
+  },
 })
+
+const emit = defineEmits(['sort'])
+
+const emitSort = (key) => {
+  emit('sort', key)
+}
+
+const columns = [
+  { key: 'id', label: 'ID', sortable: true, sortKey: 'id' },
+  { key: 'profile', label: 'Profile' },
+  { key: 'name', label: 'Name', sortable: true, sortKey: 'firstName' },
+  { key: 'role', label: 'Role', sortable: true, sortKey: 'role' },
+  { key: 'birthDate', label: 'Birth date', sortable: true, sortKey: 'birthDate' },
+  { key: 'age', label: 'Age', sortable: true, sortKey: 'age' },
+  { key: 'gender', label: 'Gender', sortable: true, sortKey: 'gender' },
+  { key: 'email', label: 'Email', sortable: true, sortKey: 'email' },
+  { key: 'phone', label: 'Phone', sortable: true, sortKey: 'phone' },
+]
 </script>

@@ -10,6 +10,9 @@
         :users="usersStore.users"
         :loading="usersStore.loading"
         :error="usersStore.error"
+        :sort-key="sortKey"
+        :sort-dir="sortDir"
+        @sort="handleSort"
       />
       <div class="border-t border-base-300 px-3 py-1">
         <UiPagination v-model:page="page" :total="usersStore.total" :page-size="pageSize" />
@@ -30,6 +33,8 @@ const page = ref(1)
 const searchTerm = ref('')
 const selectedRole = ref('')
 const selectedGender = ref('')
+const sortKey = ref('id')
+const sortDir = ref('asc')
 const usersStore = useUsersStore()
 const skip = computed(() => (page.value - 1) * pageSize)
 const pendingSearch = ref(false)
@@ -39,6 +44,8 @@ const fetchPage = async () => {
     limit: pageSize,
     skip: skip.value,
     q: searchTerm.value.trim(),
+    sortBy: sortKey.value,
+    order: sortDir.value,
   })
   usersStore.applyFilters({
     role: selectedRole.value,
@@ -66,4 +73,15 @@ watch(searchTerm, () => {
 watch([selectedRole, selectedGender], () => {
   fetchPage()
 })
+
+const handleSort = (key) => {
+  if (sortKey.value === key) {
+    sortDir.value = sortDir.value === 'asc' ? 'desc' : 'asc'
+  } else {
+    sortKey.value = key
+    sortDir.value = 'asc'
+  }
+  page.value = 1
+  fetchPage()
+}
 </script>
