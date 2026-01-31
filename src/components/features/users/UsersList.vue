@@ -84,7 +84,13 @@ watch(searchTerm, () => {
 })
 
 watch([selectedRole, selectedGender], () => {
-  fetchPage()
+  const role = selectedRole.value
+  const gender = selectedGender.value
+  if (!role && !gender) {
+    fetchPage()
+    return
+  }
+  usersStore.applyFilters({ role, gender })
 })
 
 const handleSort = (key) => {
