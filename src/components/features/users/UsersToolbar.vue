@@ -18,17 +18,18 @@
           class="h-10 w-full rounded-md border border-base-300 bg-base-100 px-2 text-sm text-base-content focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
         >
           <option value="">All roles</option>
-          <option value="admin">Admin</option>
-          <option value="moderator">Moderator</option>
-          <option value="user">User</option>
+          <option v-for="option in roleOptions" :key="option.value" :value="option.value">
+            {{ option.label }}
+          </option>
         </select>
         <select
           v-model="localGender"
           class="h-10 w-full rounded-md border border-base-300 bg-base-100 px-2 text-sm text-base-content focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
         >
           <option value="">All genders</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+          <option v-for="option in genderOptions" :key="option.value" :value="option.value">
+            {{ option.label }}
+          </option>
         </select>
         <button
           class="col-span-2 h-10 w-full cursor-pointer rounded-md bg-primary px-4 text-sm font-semibold text-base-100 transition hover:opacity-90 sm:col-span-1 sm:w-auto sm:min-w-[120px]"
@@ -44,6 +45,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import { GENDER_OPTIONS, ROLE_OPTIONS } from '@/constants/users'
 
 const props = defineProps({
   searchTerm: {
@@ -81,4 +83,7 @@ const localGender = computed({
   get: () => props.selectedGender,
   set: (value) => emit('update:selectedGender', value),
 })
+
+const roleOptions = ROLE_OPTIONS
+const genderOptions = GENDER_OPTIONS
 </script>

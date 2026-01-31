@@ -89,8 +89,9 @@
             class="mt-1 h-9 w-full rounded-md border border-base-300 bg-base-100 px-2 text-sm text-base-content"
             required
           >
-            <option value="female">Female</option>
-            <option value="male">Male</option>
+            <option v-for="option in genderOptions" :key="option.value" :value="option.value">
+              {{ option.label }}
+            </option>
           </select>
         </label>
         <label class="text-xs text-secondary">
@@ -100,9 +101,9 @@
             class="mt-1 h-9 w-full rounded-md border border-base-300 bg-base-100 px-2 text-sm text-base-content"
             required
           >
-            <option value="admin">Admin</option>
-            <option value="moderator">Moderator</option>
-            <option value="user">User</option>
+            <option v-for="option in roleOptions" :key="option.value" :value="option.value">
+              {{ option.label }}
+            </option>
           </select>
         </label>
       </div>
@@ -128,6 +129,7 @@
 
 <script setup>
 import { nextTick, onMounted, ref, watch } from 'vue'
+import { GENDER_OPTIONS, ROLE_OPTIONS } from '@/constants/users'
 
 const props = defineProps({
   isOpen: {
@@ -148,6 +150,8 @@ const emit = defineEmits(['close', 'save'])
 
 const localForm = ref({ ...props.formData })
 const firstNameRef = ref(null)
+const roleOptions = ROLE_OPTIONS
+const genderOptions = GENDER_OPTIONS
 
 watch(
   () => props.formData,
