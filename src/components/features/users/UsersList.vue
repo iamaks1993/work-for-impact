@@ -13,6 +13,7 @@
         :sort-key="sortKey"
         :sort-dir="sortDir"
         @sort="handleSort"
+        @delete="handleDelete"
       />
       <div class="border-t border-base-300 px-3 py-1">
         <UiPagination v-model:page="page" :total="usersStore.total" :page-size="pageSize" />
@@ -83,5 +84,11 @@ const handleSort = (key) => {
   }
   page.value = 1
   fetchPage()
+}
+
+const handleDelete = (user) => {
+  const confirmed = window.confirm(`Delete ${user.firstName} ${user.lastName}?`)
+  if (!confirmed) return
+  usersStore.deleteUser(user.id)
 }
 </script>

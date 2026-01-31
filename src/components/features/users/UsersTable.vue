@@ -73,6 +73,15 @@
           <td class="whitespace-nowrap px-4 py-3 text-sm text-secondary">
             {{ user.phone }}
           </td>
+          <td class="whitespace-nowrap px-4 py-3 text-sm">
+            <button
+              class="text-sm font-semibold text-red-600 hover:text-red-700"
+              type="button"
+              @click="emitDelete(user)"
+            >
+              Delete
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -103,10 +112,14 @@ defineProps({
   },
 })
 
-const emit = defineEmits(['sort'])
+const emit = defineEmits(['sort', 'delete'])
 
 const emitSort = (key) => {
   emit('sort', key)
+}
+
+const emitDelete = (user) => {
+  emit('delete', user)
 }
 
 const columns = [
@@ -119,5 +132,6 @@ const columns = [
   { key: 'gender', label: 'Gender', sortable: true, sortKey: 'gender' },
   { key: 'email', label: 'Email', sortable: true, sortKey: 'email' },
   { key: 'phone', label: 'Phone', sortable: true, sortKey: 'phone' },
+  { key: 'actions', label: 'Actions' },
 ]
 </script>

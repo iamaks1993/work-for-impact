@@ -57,6 +57,16 @@ export const useUsersStore = defineStore('users', {
       this.users = filtered
       this.total = filtered.length
     },
+    deleteUser(id) {
+      const beforeCount = this.allUsers.length
+      this.allUsers = this.allUsers.filter((user) => user.id !== id)
+      this.users = this.users.filter((user) => user.id !== id)
+
+      if (this.apiTotal > 0 && this.allUsers.length !== beforeCount) {
+        this.apiTotal -= 1
+        this.total = Math.max(this.total - 1, 0)
+      }
+    },
     async fetchUserDetail(id) {
       this.loadingDetail = true
       this.errorDetail = null
