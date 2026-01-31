@@ -39,6 +39,7 @@ import UsersTable from '@/components/features/users/UsersTable.vue'
 import UsersToolbar from '@/components/features/users/UsersToolbar.vue'
 import UiPagination from '@/components/ui/UiPagination.vue'
 import { useUsersStore } from '@/stores/users'
+import { calculateAge } from '@/utils/dateUtils'
 
 const pageSize = 10
 const page = ref(1)
@@ -114,7 +115,6 @@ const formFields = {
   gender: 'female',
   role: 'user',
   birthDate: '',
-  age: '',
   image: 'https://dummyjson.com/icon/abc123/150',
 }
 const formData = ref(formFields)
@@ -138,7 +138,6 @@ const openEdit = (user) => {
     gender: user.gender || 'female',
     role: user.role || 'user',
     birthDate: user.birthDate || '',
-    age: user.age || '',
     image: user.image,
   }
   isModalOpen.value = true
@@ -149,9 +148,12 @@ const closeModal = () => {
 }
 
 const saveUser = (data) => {
+  const computedAge = data.birthDate ? calculateAge(data.birthDate) : 0
+  const nextId = usersStore.apiTotal + 1
   const payload = {
-    id: editingUserId.value ?? Date.now(),
+    id: editingUserId.value ?? nextId,
     ...data,
+    age: computedAge,
     company: { title: 'New hire', name: 'Independent' },
     address: {
       address: 'N/A',
@@ -178,4 +180,5 @@ const saveUser = (data) => {
   }
   closeModal()
 }
+
 </script>

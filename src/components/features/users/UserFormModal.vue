@@ -69,15 +69,7 @@
           <input
             v-model="localForm.birthDate"
             type="date"
-            class="mt-1 h-9 w-full rounded-md border border-base-300 bg-base-100 px-2 text-sm text-base-content"
-            required
-          />
-        </label>
-        <label class="text-xs text-secondary">
-          Age
-          <input
-            v-model="localForm.age"
-            type="number"
+            :max="todayDate"
             class="mt-1 h-9 w-full rounded-md border border-base-300 bg-base-100 px-2 text-sm text-base-content"
             required
           />
@@ -130,6 +122,7 @@
 <script setup>
 import { nextTick, onMounted, ref, watch } from 'vue'
 import { GENDER_OPTIONS, ROLE_OPTIONS } from '@/constants/users'
+import { normalizeDate } from '@/utils/dateUtils'
 
 const props = defineProps({
   isOpen: {
@@ -152,11 +145,13 @@ const localForm = ref({ ...props.formData })
 const firstNameRef = ref(null)
 const roleOptions = ROLE_OPTIONS
 const genderOptions = GENDER_OPTIONS
+const todayDate = new Date().toISOString().split('T')[0]
+
 
 watch(
   () => props.formData,
   (value) => {
-    localForm.value = { ...value }
+    localForm.value = { ...value, birthDate: normalizeDate(value.birthDate) }
   },
   { deep: true, immediate: true },
 )
