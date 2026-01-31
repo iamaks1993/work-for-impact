@@ -5,6 +5,7 @@
         v-model:searchTerm="searchTerm"
         v-model:selectedRole="selectedRole"
         v-model:selectedGender="selectedGender"
+        @create="openCreate"
       />
       <UsersTable
         :users="usersStore.users"
@@ -14,16 +15,26 @@
         :sort-dir="sortDir"
         @sort="handleSort"
         @delete="handleDelete"
+        @edit="openEdit"
       />
       <div class="border-t border-base-300 px-3 py-1">
         <UiPagination v-model:page="page" :total="usersStore.total" :page-size="pageSize" />
       </div>
     </div>
+
+    <UserFormModal
+      v-if="isModalOpen"
+      :form-data="formData"
+      :is-edit="Boolean(editingUserId)"
+      @close="closeModal"
+      @save="saveUser"
+    />
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
+import UserFormModal from '@/components/features/users/UserFormModal.vue'
 import UsersTable from '@/components/features/users/UsersTable.vue'
 import UsersToolbar from '@/components/features/users/UsersToolbar.vue'
 import UiPagination from '@/components/ui/UiPagination.vue'
@@ -90,5 +101,81 @@ const handleDelete = (user) => {
   const confirmed = window.confirm(`Delete ${user.firstName} ${user.lastName}?`)
   if (!confirmed) return
   usersStore.deleteUser(user.id)
+}
+
+const isModalOpen = ref(false)
+const editingUserId = ref(null)
+const formFields = {
+  firstName: '',
+  lastName: '',
+  username: '',
+  email: '',
+  phone: '',
+  gender: 'female',
+  role: 'user',
+  birthDate: '',
+  age: '',
+  image: 'https://dummyjson.com/icon/abc123/150',
+}
+const formData = ref(formFields)
+
+const openCreate = () => {
+  editingUserId.value = null
+  formData.value = {
+    ...formFields,
+  }
+  isModalOpen.value = true
+}
+
+const openEdit = (user) => {
+  editingUserId.value = user.id
+  formData.value = {
+    firstName: user.firstName || '',
+    lastName: user.lastName || '',
+    username: user.username || '',
+    email: user.email || '',
+    phone: user.phone || '',
+    gender: user.gender || 'female',
+    role: user.role || 'user',
+    birthDate: user.birthDate || '',
+    age: user.age || '',
+    image: user.image,
+  }
+  isModalOpen.value = true
+}
+
+const closeModal = () => {
+  isModalOpen.value = false
+}
+
+const saveUser = (data) => {
+  const payload = {
+    id: editingUserId.value ?? Date.now(),
+    ...data,
+    company: { title: 'New hire', name: 'Independent' },
+    address: {
+      address: 'N/A',
+      city: 'N/A',
+      state: 'N/A',
+      coordinates: { lat: 0, lng: 0 },
+    },
+    hair: { color: 'N/A', type: 'N/A' },
+    bank: { cardType: 'N/A', cardNumber: 'N/A', cardExpire: 'N/A' },
+    crypto: { wallet: 'N/A' },
+    ip: '0.0.0.0',
+    macAddress: '00:00:00:00:00:00',
+    university: 'N/A',
+    weight: 0,
+    height: 0,
+    bloodGroup: 'N/A',
+    eyeColor: 'N/A',
+  }
+
+  if (editingUserId.value) {
+    usersStore.updateUser(payload)
+  } else {
+    usersStore.addUser(payload)
+  }
+  closeModal()
 }
 </script>

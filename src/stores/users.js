@@ -67,6 +67,16 @@ export const useUsersStore = defineStore('users', {
         this.total = Math.max(this.total - 1, 0)
       }
     },
+    addUser(user) {
+      this.allUsers = [user, ...this.allUsers]
+      this.users = [user, ...this.users]
+      this.apiTotal += 1
+      this.total += 1
+    },
+    updateUser(updatedUser) {
+      this.allUsers = this.allUsers.map((user) => (user.id === updatedUser.id ? updatedUser : user))
+      this.users = this.users.map((user) => (user.id === updatedUser.id ? updatedUser : user))
+    },
     async fetchUserDetail(id) {
       this.loadingDetail = true
       this.errorDetail = null

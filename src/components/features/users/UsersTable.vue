@@ -74,12 +74,31 @@
             {{ user.phone }}
           </td>
           <td class="whitespace-nowrap px-4 py-3 text-sm">
+            <RouterLink
+              class="mr-3 cursor-pointer text-base font-semibold text-secondary hover:text-primary"
+              :to="{ name: 'user-detail', params: { id: user.id } }"
+              aria-label="View user"
+              title="View"
+            >
+              👁
+            </RouterLink>
             <button
-              class="text-sm font-semibold text-red-600 hover:text-red-700"
+              class="mr-3 cursor-pointer text-base font-semibold text-primary hover:underline"
+              type="button"
+              @click="emitEdit(user)"
+              aria-label="Edit user"
+              title="Edit"
+            >
+              ✎
+            </button>
+            <button
+              class="cursor-pointer text-base font-semibold text-red-600 hover:text-red-700"
               type="button"
               @click="emitDelete(user)"
+              aria-label="Delete user"
+              title="Delete"
             >
-              Delete
+              ✕
             </button>
           </td>
         </tr>
@@ -112,7 +131,7 @@ defineProps({
   },
 })
 
-const emit = defineEmits(['sort', 'delete'])
+const emit = defineEmits(['sort', 'delete', 'edit'])
 
 const emitSort = (key) => {
   emit('sort', key)
@@ -120,6 +139,10 @@ const emitSort = (key) => {
 
 const emitDelete = (user) => {
   emit('delete', user)
+}
+
+const emitEdit = (user) => {
+  emit('edit', user)
 }
 
 const columns = [

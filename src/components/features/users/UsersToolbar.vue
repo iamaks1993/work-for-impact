@@ -30,6 +30,13 @@
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
+        <button
+          class="col-span-2 h-10 w-full cursor-pointer rounded-md bg-primary px-4 text-sm font-semibold text-base-100 transition hover:opacity-90 sm:col-span-1 sm:w-auto sm:min-w-[120px]"
+          type="button"
+          @click="emit('create')"
+        >
+          Add user
+        </button>
       </div>
     </div>
   </div>
@@ -53,7 +60,12 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:searchTerm', 'update:selectedRole', 'update:selectedGender'])
+const emit = defineEmits([
+  'update:searchTerm',
+  'update:selectedRole',
+  'update:selectedGender',
+  'create',
+])
 
 const localSearch = computed({
   get: () => props.searchTerm,
