@@ -8,8 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:unit": "vitest",
-    "lint": "run-s lint:*",
-    "lint:eslint": "eslint . --fix --cache",
+    "lint": "eslint . --fix --cache",
     "format": "prettier --write --experimental-cli src/"
   },
   "dependencies": {
@@ -29,7 +28,6 @@
     "eslint-plugin-vue": "~10.7.0",
     "globals": "^17.2.0",
     "jsdom": "^27.4.0",
-    "npm-run-all2": "^8.0.4",
     "prettier": "3.8.1",
     "vite": "^7.3.1",
     "vite-plugin-vue-devtools": "^8.0.5",
