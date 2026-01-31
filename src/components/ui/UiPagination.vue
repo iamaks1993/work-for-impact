@@ -1,6 +1,6 @@
 <template>
-  <div class="flex w-full flex-wrap items-center justify-between gap-1.5 text-[11px] text-secondary">
-    <p class="text-[11px] font-medium text-secondary">
+  <div class="flex w-full flex-wrap items-center justify-between gap-3 text-sm text-secondary">
+    <p class="text-sm font-medium text-secondary">
       Showing
       <span class="font-semibold text-base-content">{{ rangeStart }}</span>
       to
@@ -10,9 +10,9 @@
       results
     </p>
 
-    <nav class="flex items-center gap-0.5 rounded-md border border-base-300 bg-base-100 p-0.5">
+    <nav class="flex items-center gap-1 rounded-md border border-base-300 bg-base-100 p-1.5">
       <button
-        class="inline-flex h-6 w-6 items-center justify-center rounded-md text-secondary transition hover:bg-base-200 hover:text-base-content disabled:cursor-not-allowed disabled:opacity-50"
+        class="inline-flex h-8 w-8 items-center justify-center rounded-md text-secondary transition hover:bg-base-200 hover:text-base-content disabled:cursor-not-allowed disabled:opacity-50"
         type="button"
         :disabled="page <= 1"
         @click="emit('update:page', page - 1)"
@@ -24,13 +24,13 @@
       <template v-for="item in pageItems" :key="`page-${item}`">
         <span
           v-if="item === '…'"
-          class="inline-flex h-6 min-w-6 items-center justify-center rounded-md px-1 text-secondary opacity-70"
+          class="inline-flex h-8 min-w-8 items-center justify-center rounded-md px-2 text-secondary opacity-70"
         >
           …
         </span>
         <button
           v-else
-          class="inline-flex h-6 min-w-6 items-center justify-center rounded-md px-1 text-[10px] font-semibold transition"
+          class="inline-flex h-8 min-w-8 items-center justify-center rounded-md px-2 text-sm font-semibold transition"
           :class="
             item === page
               ? 'bg-primary text-base-100 shadow-sm'
@@ -44,7 +44,7 @@
       </template>
 
       <button
-        class="inline-flex h-6 w-6 items-center justify-center rounded-md text-secondary transition hover:bg-base-200 hover:text-base-content disabled:cursor-not-allowed disabled:opacity-50"
+        class="inline-flex h-8 w-8 items-center justify-center rounded-md text-secondary transition hover:bg-base-200 hover:text-base-content disabled:cursor-not-allowed disabled:opacity-50"
         type="button"
         :disabled="page >= totalPages"
         @click="emit('update:page', page + 1)"
@@ -121,5 +121,4 @@ const pageItems = computed(() => {
 
   return items
 })
-
 </script>
