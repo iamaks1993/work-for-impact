@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { fetchUsers as fetchUsersApi } from '@/services/usersApi'
+import { fetchUserById, fetchUsers as fetchUsersApi } from '@/services/usersApi'
 
 export const useUsersStore = defineStore('users', {
   state: () => ({
@@ -11,6 +11,9 @@ export const useUsersStore = defineStore('users', {
     skip: 0,
     loading: false,
     error: null,
+    userDetail: null,
+    loadingDetail: false,
+    errorDetail: null,
   }),
   actions: {
     async fetchUsers({ limit = this.limit, skip = this.skip, q = '', sortBy = '', order = 'asc' } = {}) {
@@ -53,6 +56,21 @@ export const useUsersStore = defineStore('users', {
 
       this.users = filtered
       this.total = filtered.length
+    },
+    async fetchUserDetail(id) {
+      this.loadingDetail = true
+      this.errorDetail = null
+      try {
+        this.userDetail = await fetchUserById(id)
+      } catch (err) {
+        this.errorDetail = err instanceof Error ? err.message : 'Failed to fetch user.'
+      } finally {
+        this.loadingDetail = false
+      }
+    },
+    clearUserDetail() {
+      this.userDetail = null
+      this.errorDetail = null
     },
   },
 })

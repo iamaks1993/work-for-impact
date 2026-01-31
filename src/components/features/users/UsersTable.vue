@@ -44,10 +44,12 @@
             </div>
           </td>
           <td class="whitespace-nowrap px-4 py-3">
-            <p class="text-base font-semibold text-base-content">
+            <RouterLink
+              class="text-base font-semibold underline text-base-content transition hover:text-primary"
+              :to="{ name: 'user-detail', params: { id: user.id } }"
+            >
               {{ user.firstName }} {{ user.lastName }}
-            </p>
-            <p class="text-sm text-secondary">@{{ user.username }}</p>
+            </RouterLink>
           </td>
           <td class="whitespace-nowrap px-4 py-3">
             <span

@@ -16,3 +16,13 @@ export async function fetchUsers({ limit = 10, skip = 0, q = '', sortBy = '', or
 
   return response.json()
 }
+
+export async function fetchUserById(id) {
+  const response = await fetch(`${BASE_URL}/users/${id}`)
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch user (${response.status})`)
+  }
+
+  return response.json()
+}
