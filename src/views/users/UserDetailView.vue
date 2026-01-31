@@ -1,5 +1,5 @@
 <template>
-  <section class="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-10">
+  <section class="mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-6 sm:px-6 lg:px-10">
     <header class="flex items-center justify-between gap-3">
       <div>
         <h1 class="text-2xl font-semibold text-primary sm:text-3xl">User detail</h1>
@@ -64,7 +64,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted, watch } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUsersStore } from '@/stores/users'
 
